@@ -37,8 +37,8 @@ sed -i "s/git-.*-\(.*\)/git-\1/g" /usr/lib/lua/luci/version.lua
 
 [[ "$(echo "$(/sbin/cpuinfo 2>/dev/null)" | grep -i "MHz")" ]] || sed -i "s/_('CPU Info'),cpuinfo.cpufreq,//" /www/luci-static/resources/view/status/include/10_system.js
 
-grep -q op.supes.top /etc/bypass/white.list ||
-		echo "op.supes.top" >> /etc/bypass/white.list
+grep -q op.dllkids.xyz /etc/bypass/white.list ||
+		echo "op.dllkids.xyz" >> /etc/bypass/white.list
 
 processor=`cat /proc/cpuinfo | grep 'processor' | wc -l`
 test -n "$processor" || processor=3
@@ -212,13 +212,6 @@ echo net.netfilter.nf_conntrack_helper=1 >>$SYSCTL_LOCAL
 echo kernel.msgmax = 65536 >>$SYSCTL_LOCAL
 echo kernel.msgmnb = 65536 >>$SYSCTL_LOCAL
 echo vm.swappiness=0 >>$SYSCTL_LOCAL
-
-date=`date +%m.%d`
-date1=`date +%h`
-sed -i '/DISTRIB_RELEASE/d' /etc/openwrt_release
-echo "DISTRIB_RELEASE='v$date1'" >> /etc/openwrt_release
-sed -i '/luciversion/d' /usr/lib/lua/luci/version.lua
-echo 'luciversion = "v$date1"' >> /usr/lib/lua/luci/version.lua
 
 cp -pR /www/cgi-bin/* /www/
 rm -rf /tmp/luci-*
